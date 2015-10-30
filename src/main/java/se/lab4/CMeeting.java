@@ -105,6 +105,15 @@ public class CMeeting implements Comparable<CMeeting>
         return String.format(OUTPUT_TEMPLATE, start, stop, location.name());
     }
 
+    /**
+     *
+     * This method used for comparing if 2 meetings are conflicting.<BR>
+     *
+     * @param other
+     *
+     * @return -1 stands for current object is earlier than the other; 1 stands for reversed
+     *         situation. 0 stands for somehow overlapping happens.
+     */
     @Override
     public int compareTo(CMeeting other)
     {

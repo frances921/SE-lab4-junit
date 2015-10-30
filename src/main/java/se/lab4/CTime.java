@@ -50,9 +50,14 @@ public final class CTime implements Comparable<CTime>
     {
         if (isValidTimeZone(timeZone))
         {
-            this.hour = timeOffSetByHour(timeZone - this.currentTimeZone);
+            this.hour = timeOffSetByHour(getTimeDifference(timeZone));
             this.currentTimeZone = timeZone;
         }
+    }
+
+    public int getTimeDifference(int timeZone)
+    {
+        return timeZone - this.currentTimeZone;
     }
 
     /**
@@ -158,7 +163,7 @@ public final class CTime implements Comparable<CTime>
 
     private int getTotalMinutes(int timeZone)
     {
-        int resultHour = this.timeOffSetByHour(timeZone - this.currentTimeZone);
+        int resultHour = this.timeOffSetByHour(getTimeDifference(timeZone));
         return resultHour * MINUTE + this.minute;
     }
 

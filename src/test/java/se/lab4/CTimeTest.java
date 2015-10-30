@@ -1,8 +1,7 @@
 package se.lab4;
 
 import org.junit.After;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +12,8 @@ import org.junit.Test;
 public class CTimeTest
 {
 
+    private CTime time;
+
     public CTimeTest()
     {
     }
@@ -20,54 +21,33 @@ public class CTimeTest
     @Before
     public void setUp()
     {
+        System.out.println("setUp");
+        time = new CTime(16, 47, TimeZone.Toronto.getTimeZone());
+        System.out.println(time);
     }
 
     @After
     public void tearDown()
     {
+        System.out.println("tearDown");
+        System.out.println(time);
     }
 
     @Test
     public void testSetCurrentTimeZone()
     {
         System.out.println("setCurrentTimeZone");
-        int timeZone = 0;
-        CTime instance = new CTime();
-        instance.setCurrentTimeZone(timeZone);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetMinute()
-    {
-        System.out.println("getMinute");
-        CTime instance = new CTime();
-        int expResult = 0;
-        int result = instance.getMinute();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testTimeOffSetByHour()
-    {
-        System.out.println("timeOffSetByHour");
-        int offSet = 0;
-        CTime instance = new CTime();
-        int expResult = 0;
-        int result = instance.timeOffSetByHour(offSet);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        int timeZone = TimeZone.China.getTimeZone();
+        time.setCurrentTimeZone(timeZone);
     }
 
     @Test
     public void testSetMinute()
     {
         System.out.println("setMinute");
-        int minute = 0;
-        CTime instance = new CTime();
-        instance.setMinute(minute);
-        fail("The test case is a prototype.");
+        int minute = -1;
+        time.setMinute(minute);
+        Assert.assertNotEquals(minute, time.getMinute());
     }
 
     @Test
@@ -75,21 +55,18 @@ public class CTimeTest
     {
         System.out.println("setHour");
         int hour = 0;
-        CTime instance = new CTime();
-        instance.setHour(hour);
-        fail("The test case is a prototype.");
+        time.setHour(24);
+        Assert.assertNotEquals(hour, time.getHour());
     }
 
     @Test
     public void testCompareTo()
     {
         System.out.println("compareTo");
-        CTime t = null;
-        CTime instance = new CTime();
-        int expResult = 0;
-        int result = instance.compareTo(t);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        CTime other = new CTime(16, 57, TimeZone.Toronto.getTimeZone());
+        int expResult = -10;
+        int result = time.compareTo(other);
+        Assert.assertEquals(expResult, result);
     }
 
 }
