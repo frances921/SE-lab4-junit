@@ -15,9 +15,7 @@ public final class CTime implements Comparable<CTime>
 
     private static final String OUTPUT_TEMPLATE = "CTime{ TimeZone=%d, hour=%d, minute=%d }";
 
-    private static final int DEFAULT_TIME_ZONE = -5;
-
-    private int currentTimeZone = DEFAULT_TIME_ZONE;
+    private int currentTimeZone;
 
     private int hour = 0;
 
@@ -40,7 +38,7 @@ public final class CTime implements Comparable<CTime>
     CTime(int hour, int minute, int timeZone)
     {
         this(hour, minute);
-        this.setCurrentTimeZone(timeZone);
+        this.currentTimeZone = timeZone;
     }
 
     public int getCurrentTimeZone()
