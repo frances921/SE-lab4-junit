@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class will store a list of meetings. No conflicted meeting is allow.
  *
  * @author Rugal Bernstein
  */
