@@ -8,7 +8,7 @@ package se.lab4;
  *
  * @author Rugal Bernstein
  */
-public class CMeeting
+public class CMeeting implements Comparable<CMeeting>
 {
 
     private static final String OUTPUT_TEMPLATE = "CMeeting\n  start=%s\n  stop=%s\n  location=%s";
@@ -99,6 +99,20 @@ public class CMeeting
     {
 
         return String.format(OUTPUT_TEMPLATE, start, stop, location.name());
+    }
+
+    @Override
+    public int compareTo(CMeeting other)
+    {
+        if (this.stop.compareTo(other.start) <= 0)
+        {
+            return -1;
+        }
+        if (other.stop.compareTo(this.start) <= 0)
+        {
+            return 1;
+        }
+        return 0;
     }
 
 }

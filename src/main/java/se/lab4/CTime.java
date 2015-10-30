@@ -50,7 +50,7 @@ public final class CTime implements Comparable<CTime>
     {
         if (isValidTimeZone(timeZone))
         {
-            timeOffSetByHour(timeZone - this.currentTimeZone);
+            this.hour = timeOffSetByHour(timeZone - this.currentTimeZone);
             this.currentTimeZone = timeZone;
         }
     }
@@ -69,11 +69,22 @@ public final class CTime implements Comparable<CTime>
      * Offset hour number.
      *
      * @param offSet can be positive or negative.
+     *
+     * @return The result hour number after offsetting. Will still be valid hour number.
      */
-    public void timeOffSetByHour(int offSet)
+    public int timeOffSetByHour(int offSet)
     {
-        this.hour += offSet;
-        this.hour %= 24;
+        int temp = this.hour;
+        temp += offSet;
+        if (temp < 0)
+        {
+            temp += 24;
+        }
+        else
+        {
+            temp %= 24;
+        }
+        return temp;
     }
 
 
@@ -137,12 +148,18 @@ public final class CTime implements Comparable<CTime>
     @Override
     public int compareTo(CTime t)
     {
-        return this.getTotalMinutes() - t.getTotalMinutes();
+        return this.getTotalMinutes() - t.getTotalMinutes(this.currentTimeZone);
     }
 
     private int getTotalMinutes()
     {
-        return this.hour * MINUTE + this.minute;
+        return this.getTotalMinutes(this.currentTimeZone);
+    }
+
+    private int getTotalMinutes(int timeZone)
+    {
+        int resultHour = this.timeOffSetByHour(timeZone - this.currentTimeZone);
+        return resultHour * MINUTE + this.minute;
     }
 
     @Override
