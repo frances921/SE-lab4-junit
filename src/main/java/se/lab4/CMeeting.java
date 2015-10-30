@@ -80,17 +80,21 @@ public class CMeeting implements Comparable<CMeeting>
         return location;
     }
 
-    public void setLocation(TimeZone location)
-    {
-        this.location = location;
-    }
-
     public void setStart(int hour, int minute)
     {
         CTime newTime = new CTime(hour, minute, location.getTimeZone());
         if (null == stop)
         {
             this.start = newTime;
+        }
+    }
+
+    public void setStop(int hour, int minute)
+    {
+        CTime newTime = new CTime(hour, minute, location.getTimeZone());
+        if (null == start)
+        {
+            this.stop = newTime;
         }
     }
 
