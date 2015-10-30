@@ -8,7 +8,7 @@ package se.lab4;
  *
  * @author Rugal Bernstein
  */
-public final class CTime implements Comparable<CTime>
+public final class CTime implements Comparable<CTime>, Cloneable
 {
 
     private static final int MINUTE = 60;
@@ -171,6 +171,12 @@ public final class CTime implements Comparable<CTime>
     public String toString()
     {
         return String.format(OUTPUT_TEMPLATE, this.currentTimeZone, this.hour, this.minute);
+    }
+
+    @Override
+    protected CTime clone() throws CloneNotSupportedException
+    {
+        return (CTime) super.clone();
     }
 
 }

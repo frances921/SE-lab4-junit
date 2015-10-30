@@ -23,5 +23,4 @@ public enum TimeZone
     {
         this.timeZone = timeZone;
     }
-
 }

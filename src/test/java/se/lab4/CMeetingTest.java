@@ -2,7 +2,6 @@ package se.lab4;
 
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +12,8 @@ import org.junit.Test;
 public class CMeetingTest
 {
 
+    private CMeeting meeting;
+
     public CMeetingTest()
     {
     }
@@ -20,45 +21,26 @@ public class CMeetingTest
     @Before
     public void setUp()
     {
+        System.out.println("setUp");
+        meeting = new CMeeting(12, 0, 12, 30, TimeZone.Toronto);
+        System.out.println(meeting);
     }
 
     @After
     public void tearDown()
     {
-    }
-
-    @Test
-    public void testSetStart()
-    {
-        System.out.println("setStart");
-        int hour = 0;
-        int minute = 0;
-        CMeeting instance = null;
-        instance.setStart(hour, minute);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testSetStop()
-    {
-        System.out.println("setStop");
-        int hour = 0;
-        int minute = 0;
-        CMeeting instance = null;
-        instance.setStop(hour, minute);
-        fail("The test case is a prototype.");
+        System.out.println("tearDown");
+        System.out.println(meeting);
     }
 
     @Test
     public void testCompareTo()
     {
         System.out.println("compareTo");
-        CMeeting other = null;
-        CMeeting instance = null;
-        int expResult = 0;
-        int result = instance.compareTo(other);
+        CMeeting other = new CMeeting(13, 0, 14, 0, TimeZone.Toronto);
+        int expResult = -1;
+        int result = meeting.compareTo(other);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
 }

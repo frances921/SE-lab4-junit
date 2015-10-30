@@ -69,4 +69,11 @@ public class CTimeTest
         Assert.assertEquals(expResult, result);
     }
 
+    @Test
+    public void testClone() throws CloneNotSupportedException
+    {
+        System.out.println("clone");
+        Assert.assertNotEquals(time, this.time.clone());
+    }
+
 }

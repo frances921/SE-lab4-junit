@@ -8,18 +8,32 @@ package se.lab4;
  *
  * @author Rugal Bernstein
  */
-public class CMeeting implements Comparable<CMeeting>
+public class CMeeting implements Comparable<CMeeting>, Cloneable
 {
 
     private static final String OUTPUT_TEMPLATE = "CMeeting\n  start=%s\n  stop=%s\n  location=%s";
 
     private static final TimeZone DEFAULT_TIMEZONE = TimeZone.Toronto;
 
-    private CTime start = null;
+    private final CTime start;
 
-    private CTime stop = null;
+    private final CTime stop;
 
-    private TimeZone location;
+    private final TimeZone location;
+
+    /**
+     * Internal used for replication only.
+     *
+     * @param start
+     * @param stop
+     * @param location
+     */
+    private CMeeting(CTime start, CTime stop, TimeZone location)
+    {
+        this.start = start;
+        this.stop = stop;
+        this.location = location;
+    }
 
     /**
      * Initialize object with default time zone
@@ -52,12 +66,12 @@ public class CMeeting implements Comparable<CMeeting>
         CTime newStart = new CTime(startHour, startMinute, location.getTimeZone());
         CTime newStop = new CTime(stopHour, stopMinute, location.getTimeZone());
         int duration = newStop.compareTo(newStart);
-        if (isValidMeeting(duration))
+        if (!isValidMeeting(duration))
         {
-            this.start = newStart;
-            this.stop = newStop;
+            throw new IllegalArgumentException();
         }
-        throw new IllegalArgumentException();
+        this.start = newStart;
+        this.stop = newStop;
     }
 
     private boolean isValidMeeting(int duration)
@@ -65,14 +79,42 @@ public class CMeeting implements Comparable<CMeeting>
         return duration > 0 && duration <= 60;
     }
 
+    /**
+     * Get new instance that the content of it is the same as start object.
+     *
+     * @return
+     */
     public CTime getStart()
     {
-        return start;
+        CTime time = null;
+        try
+        {
+            time = start.clone();
+        }
+        catch (CloneNotSupportedException ex)
+        {
+
+        }
+        return time;
     }
 
+    /**
+     * Get new instance that the content of it is the same as stop object.
+     *
+     * @return
+     */
     public CTime getStop()
     {
-        return stop;
+        CTime time = null;
+        try
+        {
+            time = stop.clone();
+        }
+        catch (CloneNotSupportedException ex)
+        {
+
+        }
+        return time;
     }
 
     public TimeZone getLocation()
@@ -80,28 +122,9 @@ public class CMeeting implements Comparable<CMeeting>
         return location;
     }
 
-    public void setStart(int hour, int minute)
-    {
-        CTime newTime = new CTime(hour, minute, location.getTimeZone());
-        if (null == stop)
-        {
-            this.start = newTime;
-        }
-    }
-
-    public void setStop(int hour, int minute)
-    {
-        CTime newTime = new CTime(hour, minute, location.getTimeZone());
-        if (null == start)
-        {
-            this.stop = newTime;
-        }
-    }
-
     @Override
     public String toString()
     {
-
         return String.format(OUTPUT_TEMPLATE, start, stop, location.name());
     }
 
@@ -128,4 +151,18 @@ public class CMeeting implements Comparable<CMeeting>
         return 0;
     }
 
+    /**
+     * Replicate a CMeeting object for preventing external reference.
+     *
+     * @return
+     *
+     * @throws java.lang.CloneNotSupportedException
+     *
+     *
+     */
+    @Override
+    protected CMeeting clone() throws CloneNotSupportedException
+    {
+        return (CMeeting) super.clone();
+    }
 }
