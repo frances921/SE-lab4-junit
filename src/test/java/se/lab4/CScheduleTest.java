@@ -16,8 +16,6 @@ public class CScheduleTest
 
     private final CMeeting hawaii = new CMeeting(12, 0, 12, 45, TimeZone.Hawaii);
 
-    private final CMeeting china = new CMeeting(12, 0, 12, 45, TimeZone.China);
-
     private final CMeeting toronto = new CMeeting(12, 0, 12, 45, TimeZone.Toronto);
 
     public CScheduleTest()
@@ -29,7 +27,6 @@ public class CScheduleTest
     {
         System.out.println("setUp");
         schedule = new CSchedule();
-        schedule.addMeeting(china);
         schedule.addMeeting(hawaii);
         schedule.addMeeting(toronto);
         System.out.println(schedule);
@@ -43,7 +40,7 @@ public class CScheduleTest
         System.out.println("-----------------------------------------------");
     }
 
-    @Test
+	@Test
     public void testAddMeetingSucceed()
     {
         System.out.println("addMeeting");
@@ -59,6 +56,28 @@ public class CScheduleTest
         CMeeting meeting = new CMeeting(12, 0, 12, 45, TimeZone.Hawaii);
         boolean result = schedule.addMeeting(meeting);
         Assert.assertFalse(result);
+    }
+    
+    @Test
+    public void testAddMoreMeetingsSucceed() {
+    	System.out.println("Add more meetings");
+    	CMeeting meeting1 = new CMeeting(8, 0, 8, 35);
+    	CMeeting meeting2 = new CMeeting(11, 0, 11, 35);
+    	schedule.addMeeting(meeting1);
+    	boolean result = schedule.addMeeting(meeting2);
+    	Assert.assertTrue(result);
+    }
+    
+    @Test
+    public void testAddMeetingWithDiffTZ() {
+    	System.out.println("Add 2 meetings in different timezone with same local time");
+    	CMeeting meeting1 = new CMeeting(17, 0, 17, 45, TimeZone.Hawaii);
+    	CMeeting meeting2 = new CMeeting(17, 0, 17, 45, TimeZone.Arizona);    	
+    	boolean result1 = schedule.addMeeting(meeting1);
+    	boolean result2 = schedule.addMeeting(meeting2);
+    	System.out.println(String.format("Add meeting at 17 to 17:45 in Hawaii: ", result1));
+    	System.out.println(String.format("Add meeting at 17 to 17:45 in Arizona: ", result2));
+    	Assert.assertTrue(result2);
     }
 
 }
