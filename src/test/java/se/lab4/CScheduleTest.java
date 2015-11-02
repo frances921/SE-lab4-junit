@@ -46,7 +46,7 @@ public class CScheduleTest
     @Test
     public void testAddMeetingSucceed()
     {
-        System.out.println("addMeeting");
+        System.out.println("addMeetingSucceeded");
         CMeeting meeting = new CMeeting(13, 0, 13, 45, TimeZone.Hawaii);
         boolean result = schedule.addMeeting(meeting);
         Assert.assertTrue(result);
@@ -55,7 +55,7 @@ public class CScheduleTest
     @Test
     public void testAddMeetingFail()
     {
-        System.out.println("addMeeting");
+        System.out.println("addMeetingFailed");
         CMeeting meeting = new CMeeting(12, 0, 12, 45, TimeZone.Hawaii);
         boolean result = schedule.addMeeting(meeting);
         Assert.assertFalse(result);
