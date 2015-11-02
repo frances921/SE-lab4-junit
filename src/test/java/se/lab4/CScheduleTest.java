@@ -31,7 +31,7 @@ public class CScheduleTest
     {
         System.out.println("tearDown");
         System.out.println(schedule);
-        System.out.println("-----------------------------------------------");
+        System.out.println("----------------------------------------------");
     }
 
 	@Test
