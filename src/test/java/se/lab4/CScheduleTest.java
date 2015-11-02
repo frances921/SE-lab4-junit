@@ -14,10 +14,6 @@ public class CScheduleTest
 
     private CSchedule schedule;
 
-    private final CMeeting hawaii = new CMeeting(12, 0, 12, 45, TimeZone.Hawaii);
-
-    private final CMeeting toronto = new CMeeting(12, 0, 12, 45, TimeZone.Toronto);
-
     public CScheduleTest()
     {
     }
@@ -27,8 +23,6 @@ public class CScheduleTest
     {
         System.out.println("setUp");
         schedule = new CSchedule();
-        schedule.addMeeting(hawaii);
-        schedule.addMeeting(toronto);
         System.out.println(schedule);
     }
 
@@ -43,7 +37,7 @@ public class CScheduleTest
 	@Test
     public void testAddMeetingSucceed()
     {
-        System.out.println("addMeeting");
+        System.out.println("addMeetingSucceeded");
         CMeeting meeting = new CMeeting(13, 0, 13, 45, TimeZone.Hawaii);
         boolean result = schedule.addMeeting(meeting);
         Assert.assertTrue(result);
@@ -52,8 +46,9 @@ public class CScheduleTest
     @Test
     public void testAddMeetingFail()
     {
-        System.out.println("addMeeting");
+        System.out.println("addMeetingFailed");
         CMeeting meeting = new CMeeting(12, 0, 12, 45, TimeZone.Hawaii);
+        schedule.addMeeting(meeting);
         boolean result = schedule.addMeeting(meeting);
         Assert.assertFalse(result);
     }
@@ -72,12 +67,22 @@ public class CScheduleTest
     public void testAddMeetingWithDiffTZ() {
     	System.out.println("Add 2 meetings in different timezone with same local time");
     	CMeeting meeting1 = new CMeeting(17, 0, 17, 45, TimeZone.Hawaii);
-    	CMeeting meeting2 = new CMeeting(17, 0, 17, 45, TimeZone.Arizona);    	
+    	CMeeting meeting2 = new CMeeting(17, 0, 17, 45, TimeZone.China);    	
     	boolean result1 = schedule.addMeeting(meeting1);
     	boolean result2 = schedule.addMeeting(meeting2);
-    	System.out.println(String.format("Add meeting at 17 to 17:45 in Hawaii: ", result1));
-    	System.out.println(String.format("Add meeting at 17 to 17:45 in Arizona: ", result2));
+    	System.out.println(String.format("Add meeting at 17 to 17:45 in Hawaii: %b", result1));
+    	System.out.println(String.format("Add meeting at 17 to 17:45 in Arizona: %b", result2));
     	Assert.assertTrue(result2);
+    }
+    
+    @Test
+    public void testOverlappedMeetingFail() {
+    	System.out.println("Add 2 meeting with time overlapped fail");
+    	CMeeting meeting1 = new CMeeting(17, 0, 17, 45, TimeZone.Hawaii);
+    	CMeeting meeting2 = new CMeeting(17, 40, 18, 30, TimeZone.Hawaii); 
+    	schedule.addMeeting(meeting1);
+    	boolean result = schedule.addMeeting(meeting2);
+    	Assert.assertFalse(result);
     }
 
 }
