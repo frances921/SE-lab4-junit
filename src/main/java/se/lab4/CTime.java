@@ -92,11 +92,6 @@ public final class CTime implements Comparable<CTime>, Cloneable
         return temp;
     }
 
-
-    {
-
-    }
-
     /**
      * Set the value of minute.<BR>
      * Input minute has to be a valid minute number.
