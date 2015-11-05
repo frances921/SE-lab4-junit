@@ -7,7 +7,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Rugal Bernstein
+ * @author Rugal Bernstein, Jing Tao
  */
 public class CMeetingTest
 {
